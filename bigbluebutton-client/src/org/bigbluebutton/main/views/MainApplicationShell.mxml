@@ -669,7 +669,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 	
 	<mx:ControlBar width="100%" height="{footerHeight}" paddingTop="0" id="controlBar">
 		<mx:Label
-				htmlText="{ResourceUtil.getInstance().getString('bbb.mainshell.copyrightLabel2',[appVersion])}"
+				htmlText="Riksförbundet Hem och Skola – För mer information besök www.hemoskola.se"
 				id="copyrightLabel2"
 				selectable="false" paddingRight="20"/>
 		<mx:Spacer width="100%" id="spacer" />
