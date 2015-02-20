@@ -19,6 +19,10 @@ Om hostname/ip ändras behöver du köra. Update config.xml (replace the OLDHOST
 
 $ sed -i s/OLDHOST/NEWHOST/g bigbluebutton-client/src/conf/config.xml
 
+bigbluebutton-web instruktioner: https://code.google.com/p/bigbluebutton/wiki/090Developing#Developing_BBB-Web
+
+Uppdatera serverUrl och salt i bigbluebutton-web/grails-app/conf för att matcha din miljö.
+
 License
 =======
 BigBlueButton is licensed under the LGPL 3.0.
