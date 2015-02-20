@@ -19,7 +19,7 @@ Efter installation av bbb dev environment:
 
 Hjälpikonen URL:
 Ändra rad 5 i bigbluebutton-client/src/conf/confic.xml till:
- <help url="http://aloks.se"/>
+ url="http://aloks.se"
 
 License
 =======
