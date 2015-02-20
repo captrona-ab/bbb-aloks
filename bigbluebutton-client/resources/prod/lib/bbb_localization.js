@@ -1,5 +1,5 @@
 // Check locale
-var localeChain = "en_US";
+var localeChain = "sv_SE";
 
 if (navigator.language)
         localeChain = navigator.language;
