@@ -1,4 +1,4 @@
-BigBlueButton
+bbb-aloks
 =============
 BigBlueButton is an open source web conferencing system for on-line learning.  We believe that every student with a web browser should have access to a high-quality on-line learning experience.  We intend to make that possible with BigBlueButton. 
 
@@ -13,21 +13,13 @@ BigBlueButton is built on the [shoulders of giants] (http://www.bigbluebutton.or
 
 Getting Started
 ===============
-All the core information is at the [Google Code project page] (http://code.google.com/p/bigbluebutton/).  Here are a few quick links
+Instruktioner kommer...
 
-If you want to see how BigBlueButton works, check out these two videos
-  * [presenter] (http://www.bigbluebutton.org/videos/)
-  * [viewer] (http://www.bigbluebutton.org/videos/)
+Efter installation av bbb dev environment:
 
-After watching the videos, if you want to immediately try out BigBlueButton, the project maintains a live [demo server] (http://demo.bigbluebutton.org) that anyone can join.  
-
-To quickly get started running your own BigBlueButton server
-  * [Install on Ubunt 10.04 64-bit] (http://code.google.com/p/bigbluebutton/wiki/InstallationUbuntu)
-  * [Download the BigBlueButton 0.81 Virtual Machine] (http://code.google.com/p/bigbluebutton/wiki/BigBlueButtonVM)
-
-See also [history of project] (http://www.bigbluebutton.org/history/).
-
-If you like the work we've done with BigBlueButton and would like to contribute improvemets to the project, see [Contribute to BigBlueButton] (http://code.google.com/p/bigbluebutton/wiki/FAQ#Contributing_to_BigBlueButton).
+Hjälpikonen URL:
+Ändra rad 5 i bigbluebutton-client/src/conf/confic.xml till:
+ <help url="http://aloks.se"/>
 
 License
 =======
