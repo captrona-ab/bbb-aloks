@@ -1,6 +1,6 @@
 // Check locale
 var localeChain = "sv_SE";
-
+/*
 if (navigator.language)
         localeChain = navigator.language;
 else if (navigator.browserLanguage)
@@ -18,9 +18,9 @@ else if(/^([a-z]+)$/i.test(localeChain)){
         localeChain = matches[1].toLowerCase() + "_" + matches[1].toUpperCase();
 }
 else{
-        localeChain = "en_US";
+        localeChain = "sv_SE";
 }
-
+*/
 function getLanguage(){
         return localeChain;
 }
