@@ -15,11 +15,9 @@ Getting Started
 ===============
 Instruktioner kommer...
 
-Efter installation av bbb dev environment:
-
-Hjälpikonen URL:
-Ändra rad 5 i bigbluebutton-client/src/conf/confic.xml till:
- url="http://aloks.se"
+Om hostname/ip ändras behöver du köra.
+# Update config.xml (replace the OLDHOST and NEWHOST with old/new hostname/ip address)
+sed -i s/OLDHOST/NEWHOST/g bigbluebutton-client/src/conf/config.xml
 
 License
 =======
