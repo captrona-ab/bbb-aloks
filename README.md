@@ -32,7 +32,7 @@ File: MainApplicationShell.mxml .
 
 Location: bigbluebutton-client/src/org/bigbluebutton/main/views/ .
 
-Line: ~670 with the text 'mx:ControlBar width="100%" height="{footerHeight}" paddingTop="0" id="controlBar"' .
+Line: ~670 with the text \<mx:ControlBar width="100%" height="{footerHeight}" paddingTop="0" id="controlBar"\>
 
 HowTo: Change the htmlText atribute where the "id" atribute is "copyrightLabel2".
 
