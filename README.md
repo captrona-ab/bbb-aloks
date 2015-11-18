@@ -34,7 +34,7 @@ Line: ~670 with the text '<mx:ControlBar width="100%" height="{footerHeight}" pa
 HowTo: Change the htmlText atribute where the "id" atribute is "copyrightLabel2"
 
 Alternative method
-~~~~~~~~~~~~~~~~~~~~~
+------------------
 Alternative you can edit the translation for this line
 Find the line containing "bbb.mainshell.copyrightLabel2" in bbbResources.properties
 in the location bigbluebutton-client/locale/<language_code>
