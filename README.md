@@ -1,4 +1,4 @@
-*bbb-aloks
+bbb-aloks
 =============
 BigBlueButton is an open source web conferencing system for on-line learning.  We believe that every student with a web browser should have access to a high-quality on-line learning experience.  We intend to make that possible with BigBlueButton. 
 
@@ -23,23 +23,23 @@ bigbluebutton-web instruktioner: https://code.google.com/p/bigbluebutton/wiki/09
 
 Uppdatera serverUrl och salt i bigbluebutton-web/grails-app/conf för att matcha din miljö.
 
-*Changing stuff
+Changing stuff
 ==============
 
-**Changing the footer:
+Changing the footer:
 --------------------
 File: MainApplicationShell.mxml
 Location: bigbluebutton-client/src/org/bigbluebutton/main/views/
 Line: ~670 with the text '<mx:ControlBar width="100%" height="{footerHeight}" paddingTop="0" id="controlBar">'
 HowTo: Change the htmlText atribute where the "id" atribute is "copyrightLabel2"
 
-***Alternative method
+Alternative method
 ~~~~~~~~~~~~~~~~~~~~~
 Alternative you can edit the translation for this line
 Find the line containing "bbb.mainshell.copyrightLabel2" in bbbResources.properties
 in the location bigbluebutton-client/locale/<language_code>
 
-**Changing the welcome text
+Changing the welcome text
 -------------------------
 File: bigbluebutton.properties
 Location: /var/lib/tomcat7/webapps/bigbluebutton/WEB-INF/classes/bigbluebutton.properties
@@ -47,7 +47,7 @@ Line: Find the line containing "defaultWelcomeMessage" and/or "defaultWelcomeMes
 HowTo: Change those lines to the appropiate message.
 Note: This is change is not done in the dev-enviroment.
 
-*License
+License
 =======
 BigBlueButton is licensed under the LGPL 3.0.
 
