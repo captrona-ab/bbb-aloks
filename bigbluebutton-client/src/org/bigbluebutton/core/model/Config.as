@@ -18,8 +18,6 @@
  */
 package org.bigbluebutton.core.model
 {
-	import org.bigbluebutton.common.LogUtil;
-
 	public class Config
 	{
 		private var config:XML = null;
@@ -62,7 +60,6 @@ package org.bigbluebutton.core.model
 			var a:Object = new Object();
 			a.uri = config.application.@uri;
 			a.host = config.application.@host;
-      a.stuns = config.application.@stuns;
 			return a;
 		}
 		
@@ -89,12 +86,16 @@ package org.bigbluebutton.core.model
 			return new XML(config.browserVersions.toXMLString());
 		}
 
-    public function get layout():XML {
-      return new XML(config.layout.toXMLString());
-    }
+	    public function get layout():XML {
+	      return new XML(config.layout.toXMLString());
+	    }
     	
 		public function get meeting():XML {
 			return new XML(config.meeting.toXMLString());
+		}
+
+		public function get logging():XML {
+			return new XML(config.logging.toXMLString());
 		}
 		
 		public function get lock():XML {

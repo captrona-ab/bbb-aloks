@@ -21,9 +21,15 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 -->
 <mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
                 xmlns:views="*"
-                pageTitle="Aloks" 
-                layout="absolute" 
+                pageTitle="BigBlueButton" 
+                layout="absolute"
+				preinitialize="LogUtil.initLogging(true)"
                 preloader="org.bigbluebutton.main.model.BigBlueButtonPreloader">
+	<mx:Script>
+		<![CDATA[
+			import org.bigbluebutton.common.LogUtil;
+		]]>
+	</mx:Script>
    
   <views:BigBlueButtonMainContainer id="bbbShell"/>
  

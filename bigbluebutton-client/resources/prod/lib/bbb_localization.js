@@ -1,6 +1,6 @@
 // Check locale
 var localeChain = "sv_SE";
-/*
+
 if (navigator.language)
         localeChain = navigator.language;
 else if (navigator.browserLanguage)
@@ -20,7 +20,9 @@ else if(/^([a-z]+)$/i.test(localeChain)){
 else{
         localeChain = "sv_SE";
 }
-*/
+// Stritcly sets the language to swedish, remove this line to enable dynamic language changes. Based on the code above.
+localeChain = "sv_SE";
+
 function getLanguage(){
         return localeChain;
 }
