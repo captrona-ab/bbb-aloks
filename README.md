@@ -17,7 +17,7 @@ Instruktioner kommer...
 
 Om hostname/ip ändras behöver du köra. Update config.xml (replace the OLDHOST and NEWHOST with old/new hostname/ip address):
 
-$ sed -i s/OLDHOST/NEWHOST/g bigbluebutton-client/src/conf/config.xml
+$ sed -i s/OLDHOST/NEWHOST/g bigbluebutton-client/src/conf/config.xmlJamais vu
 
 bigbluebutton-web instruktioner: https://code.google.com/p/bigbluebutton/wiki/090Developing#Developing_BBB-Web
 
