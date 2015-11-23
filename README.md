@@ -48,13 +48,23 @@ Changing the welcome text
 -------------------------
 File: bigbluebutton.properties .
 
-Location: /var/lib/tomcat7/webapps/bigbluebutton/WEB-INF/classes/bigbluebutton.properties .
+Location: /var/lib/tomcat7/webapps/bigbluebutton/WEB-INF/classes/ .
 
 Line: Find the line containing "defaultWelcomeMessage" and/or "defaultWelcomeMessageFooter".
 
 HowTo: Change those lines to the appropiate message.
 
 Note: This is change is not done in the dev-enviroment.
+
+Changing the logout url
+-----------------------
+File:  bigbluebutton.properties .
+
+Location: /var/lib/tomcat7/webapps/bigbluebutton/WEB-INF/classes/ .
+
+Line: Find the line containing "bigbluebutton.web.logoutURL"
+
+HowTo: Change the variable to the desierd URL
 
 License
 =======
