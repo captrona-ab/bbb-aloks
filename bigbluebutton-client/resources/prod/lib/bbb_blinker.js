@@ -1,5 +1,5 @@
 function setTitle(title){
-    document.title= "BigBlueButton - " + title;
+    document.title= "Den nya, \"flippade\" skolan" + title;
 }
 
 function clientReady(message){
