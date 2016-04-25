@@ -1,13 +1,14 @@
 bbb-aloks
 =============
-BigBlueButton is an open source web conferencing system for on-line learning.  We believe that every student with a web browser should have access to a high-quality on-line learning experience.  We intend to make that possible with BigBlueButton. 
+BigBlueButton is an open source web conferencing system for on-line learning.  
 
-BigBlueButton supports real-time sharing of slides (PDF and any document readable by OpenOffice), webcams, whiteboard, chat, voice over IP (using FreeSWITCH), and desktop. It can record and playback all content shared in a session.  The BigBlueButton project is is supported by a [community of developers] (http://www.bigbluebutton.org/support/) that care about good design and a streamlined user experience. 
+We believe that every student with a web browser should have access to a high-quality on-line learning experience.  We intend to make that possible with BigBlueButton. 
 
-The use cases for BigBlueButton are
+BigBlueButton supports real-time sharing of slides (PDF and any document readable by LibreOffice), webcams, whiteboard, chat, voice over IP (using FreeSWITCH), and desktop.  It can record and playback all content shared in a session.  The use cases for BigBlueButton are
+
   * One-to-one on-line tutoring
   * Small group collaboration 
-  * On-line classes (25 or less)
+  * On-line classes (50 or less)
 
 BigBlueButton is built on the [shoulders of giants] (http://www.bigbluebutton.org/components/).
 
@@ -66,8 +67,11 @@ Line: Find the line containing "bigbluebutton.web.logoutURL"
 
 HowTo: Change the variable to the desierd URL
 
+
 License
 =======
-BigBlueButton is licensed under the LGPL 3.0.
+  
+
+For more information on the latest release -- including installation instructions, demo server, API, and overview of architecture -- see [http://docs.bigbluebutton.org/](http://docs.bigbluebutton.org/).
 
 BigBlueButton and the BigBlueButton Logo are trademarks of [BigBlueButton Inc] (http://bigbluebutton.org) .

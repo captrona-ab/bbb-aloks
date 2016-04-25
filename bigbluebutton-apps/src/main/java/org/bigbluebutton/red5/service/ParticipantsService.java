@@ -59,7 +59,12 @@ public class ParticipantsService {
 		String meetingId = scope.getName();
 		String userId = (String) msg.get("userId");
 		String emojiStatus = (String) msg.get("emojiStatus");
-		red5InGW.userEmojiStatus(meetingId, userId, emojiStatus);
+		
+		if (StringUtils.isEmpty(emojiStatus)) {
+	    log.warn("Invalid EmojiStatus from client: meetingId=" + meetingId + ", userId=" + userId + ",emoji=" + emojiStatus);
+			// Set emojiStatus=none if passed is null.
+			emojiStatus = "none";
+		}
 	}
 	
 	public void ejectUserFromMeeting(Map<String, String> msg) {
