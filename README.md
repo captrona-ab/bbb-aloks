@@ -27,6 +27,10 @@ Uppdatera serverUrl och salt i bigbluebutton-web/grails-app/conf för att matcha
 Changing stuff
 ==============
 
+Changing the header:
+--------------------
+If we use the installation for 1.0rc+ changing the header is done in: `/var/www/bigbluebutton/client/BigBlueButton.html`
+
 Changing the footer:
 --------------------
 File: MainApplicationShell.mxml .
