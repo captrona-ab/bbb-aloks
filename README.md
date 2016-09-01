@@ -27,6 +27,12 @@ Uppdatera serverUrl och salt i bigbluebutton-web/grails-app/conf för att matcha
 Changing stuff
 ==============
 
+Production:
+-----------
+To change the default language change the file `/var/www/bigbluebutton/client/lib/bbb_localization.js` set `localeChain` to the desierd language code
+Note that you might need a compiled language file from the develop server!
+
+
 Changing the header:
 --------------------
 If we use the installation for 1.0rc+ changing the header is done in: `/var/www/bigbluebutton/client/BigBlueButton.html`
