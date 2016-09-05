@@ -71,9 +71,11 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
                 }
                 chatNoiseCheckBox.selected = Accessibility.active;
                 changeChatNoise();
+                
+                lockSettingsChanged();
             }
             
-            public function accessibleClick(event:KeyboardEvent):void{
+            public function onUserListKeyDown(event:KeyboardEvent):void{
                 if (event.keyCode == 32){
                     openPrivateChat(event);
                 }
@@ -93,6 +95,8 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 			
             protected function openPrivateChat(event:Event):void{
                 if (usersList.selectedIndex == -1) return;
+                
+                if (!usersList.visible || !usersList.enabled) return;
                 
                 var chatWithUserID:String = usersList.selectedItem.userID;
                 
@@ -121,7 +125,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
               }
             }
           
-          private function lockSettingsChanged(e:Event):void {
+          private function lockSettingsChanged(e:Event = null):void {
             
             if (UsersUtil.amIModerator() || UsersUtil.amIPresenter()) return; // Settings only affect viewers.
             
@@ -144,7 +148,8 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
              visible="{chatOptions.privateEnabled}" includeInLayout="{chatOptions.privateEnabled}"
              itemRenderer="org.bigbluebutton.modules.chat.views.UserRenderer"
              labelField="name"
-             itemClick="openPrivateChat(event)" 
+             itemClick="openPrivateChat(event)"
+             keyDown="onUserListKeyDown(event)"
              toolTip="{ResourceUtil.getInstance().getString('bbb.chat.usersList.toolTip')}"
              accessibilityName="{ResourceUtil.getInstance().getString('bbb.chat.usersList.accessibilityName')}"/>
     <mx:Label styleName="chatOptionsLabel" text="{ResourceUtil.getInstance().getString('bbb.chat.chatOptions')}" />

@@ -6,6 +6,8 @@ record-and-playback/playback-web/playback-web-0.1.war
 record-and-playback/.project
 push_to_git.py
 **/target/*
+**/.cache-main
+**/.cache-tests
 .vagrant/*
 **/.settings/*
 */.gradle
@@ -28,3 +30,5 @@ bigbluebutton-web/target-eclipse*
 record-and-playback/.loadpath
 sftp-config.json
 sftp-config.json.bak
+clients/flash/**/build
+clients/flash/**/.gradle
