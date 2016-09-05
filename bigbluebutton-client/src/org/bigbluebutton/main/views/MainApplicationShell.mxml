@@ -661,13 +661,11 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 	
 	<mx:ControlBar width="100%" height="{footerHeight}" paddingTop="0" id="controlBar">
 		<mx:Label
-				htmlText="Riksförbundet Hem och Skola - För mer information besök www.hemoskola.se"
-				<!-- htmlText="{ResourceUtil.getInstance().getString('bbb.mainshell.copyrightLabel2',[appVersion])}" -->
+				htmlText="Riksförbundet Hem och Skola - För mer information besök www.hemoskola.se - RAWR"
 				link="onFooterLinkClicked(event)"
 				id="copyrightLabel2" truncateToFit="true"
 				width="100%" minWidth="1"
 				selectable="true" paddingRight="10"/>
-		
 		<mx:Label 
 				id="lblWebRTC"
 				text="{'[ '+ResourceUtil.getInstance().getString('bbb.mainshell.notification.webrtc')+' ]'}"
