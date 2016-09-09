@@ -9,7 +9,7 @@ import scala.collection.JavaConversions._
 import java.util.ArrayList
 import org.bigbluebutton.common.messages.MessagingConstants
 import org.bigbluebutton.core.messaging.Util
-import org.bigbluebutton.common.messages.ChatKeyUtil
+import org.bigbluebutton.core.service.chat.ChatKeyUtil
 
 object ChatMessageToJsonConverter {
 

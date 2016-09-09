@@ -21,7 +21,6 @@ package org.bigbluebutton.api.domain;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +37,7 @@ public class Meeting {
 	private String name;
 	private String extMeetingId;
 	private String intMeetingId;	
-	private Integer duration = 0;	 
+	private long duration = 0;	 
 	private long createdTime = 0;
 	private long startTime = 0;
 	private long endTime = 0;
@@ -47,7 +46,6 @@ public class Meeting {
 	private String webVoice;
 	private String moderatorPass;
 	private String viewerPass;
-	private String welcomeMsgTemplate;
 	private String welcomeMsg;
 	private String modOnlyMessage;
 	private String logoutUrl;
@@ -61,42 +59,36 @@ public class Meeting {
 	private boolean userHasJoined = false;
 	private Map<String, String> metadata;
 	private Map<String, Object> userCustomData;
-	private final ConcurrentMap<String, User> users;
-	private final ConcurrentMap<String, Long> registeredUsers;
+	private final ConcurrentMap<String, User> users; 
 	private final ConcurrentMap<String, Config> configs;
-	private final Boolean isBreakout;
 	
 	private long lastUserLeftOn = 0;
 	
-    public Meeting(Builder builder) {
-        name = builder.name;
-        extMeetingId = builder.externalId;
-        intMeetingId = builder.internalId;
-        viewerPass = builder.viewerPass;
-        moderatorPass = builder.moderatorPass;
-        maxUsers = builder.maxUsers;
-        logoutUrl = builder.logoutUrl;
-        defaultAvatarURL = builder.defaultAvatarURL;
-        record = builder.record;
-        autoStartRecording = builder.autoStartRecording;
-        allowStartStopRecording = builder.allowStartStopRecording;
-        duration = builder.duration;
-        webVoice = builder.webVoice;
-        telVoice = builder.telVoice;
-        welcomeMsgTemplate = builder.welcomeMsgTemplate;
-        welcomeMsg = builder.welcomeMsg;
-        dialNumber = builder.dialNumber;
-        metadata = builder.metadata;
-        createdTime = builder.createdTime;
-        isBreakout = builder.isBreakout;
+	public Meeting(Builder builder) {
+		name = builder.name;
+		extMeetingId = builder.externalId;
+		intMeetingId = builder.internalId;
+		viewerPass = builder.viewerPass;
+		moderatorPass = builder.moderatorPass;
+		maxUsers = builder.maxUsers;
+		logoutUrl = builder.logoutUrl;
+		defaultAvatarURL = builder.defaultAvatarURL;
+		record = builder.record;
+		autoStartRecording = builder.autoStartRecording;
+		allowStartStopRecording = builder.allowStartStopRecording;
+   	duration = builder.duration;
+   	webVoice = builder.webVoice;
+   	telVoice = builder.telVoice;
+   	welcomeMsg = builder.welcomeMsg;
+   	dialNumber = builder.dialNumber;
+   	metadata = builder.metadata;
+   	createdTime = builder.createdTime;
+   	userCustomData = new HashMap<String, Object>();
 
-        userCustomData = new HashMap<String, Object>();
-
-        users = new ConcurrentHashMap<String, User>();
-        registeredUsers = new ConcurrentHashMap<String, Long>();
-
-        configs = new ConcurrentHashMap<String, Config>();
-    }
+		users = new ConcurrentHashMap<String, User>();
+		
+		configs = new ConcurrentHashMap<String, Config>();
+	}
 
 	public String storeConfig(boolean defaultConfig, String config) {
 		String token = RandomStringUtils.randomAlphanumeric(8);
@@ -128,19 +120,15 @@ public class Meeting {
 	public Config removeConfig(String token) {
 		return configs.remove(token);
 	}
-
+	
 	public Map<String, String> getMetadata() {
 		return metadata;
 	}
-
+	
 	public Collection<User> getUsers() {
 		return users.isEmpty() ? Collections.<User>emptySet() : Collections.unmodifiableCollection(users.values());
 	}
-
-	public ConcurrentMap<String, User> getUsersMap() {
-	    return users;
-	}
-
+	
 	public long getStartTime() {
 		return startTime;
 	}
@@ -153,7 +141,7 @@ public class Meeting {
 		return createdTime;
 	}
 	
-	public Integer getDuration() {
+	public long getDuration() {
 		return duration;
 	}
 	
@@ -175,10 +163,6 @@ public class Meeting {
 	
 	public boolean isRunning() {
 		return ! users.isEmpty();
-	}
-	
-	public Boolean isBreakout() {
-	  return isBreakout;
 	}
 
 	public String getName() {
@@ -216,10 +200,6 @@ public class Meeting {
 	public String getViewerPassword() {
 		return viewerPass;
 	}
-	
-    public String getWelcomeMessageTemplate() {
-        return welcomeMsgTemplate;
-    }
 
 	public String getWelcomeMessage() {
 		return welcomeMsg;
@@ -254,16 +234,16 @@ public class Meeting {
 	}
 	
 	public void userJoined(User user) {
-	    userHasJoined = true;
-	    this.users.put(user.getInternalUserId(), user);
+		userHasJoined = true;
+		this.users.put(user.getInternalUserId(), user);
 	}
-
+	
 	public User userLeft(String userid){
 		User u = (User) users.remove(userid);	
 		if (users.isEmpty()) lastUserLeftOn = System.currentTimeMillis();
 		return u;
 	}
-
+	
 	public User getUserById(String id){
 		return this.users.get(id);
 	}
@@ -385,14 +365,12 @@ public class Meeting {
     	private int duration;
     	private String webVoice;
     	private String telVoice;
-    	private String welcomeMsgTemplate;
     	private String welcomeMsg;
     	private String logoutUrl;
     	private Map<String, String> metadata;
     	private String dialNumber;
     	private String defaultAvatarURL;
     	private long createdTime;
-    	private boolean isBreakout;
     	
     	public Builder(String externalId, String internalId, long createTime) {
     		this.externalId = externalId;
@@ -459,20 +437,10 @@ public class Meeting {
     		welcomeMsg = w;
     		return this;
     	}
-
-	    public Builder withWelcomeMessageTemplate(String w) {
-            welcomeMsgTemplate = w;
-            return this;
-        }
-           
+    	
     	public Builder withDefaultAvatarURL(String w) {
     		defaultAvatarURL = w;
     		return this;
-    	}
-    	
-    	public Builder isBreakout(Boolean b) {
-    	  isBreakout = b;
-    	  return this;
     	}
     	   	
     	public Builder withLogoutUrl(String l) {
@@ -488,19 +456,5 @@ public class Meeting {
     	public Meeting build() {
     		return new Meeting(this);
     	}
-    }
-
-    public void userRegistered(String internalUserID) {
-        this.registeredUsers.put(internalUserID, new Long(System.nanoTime()));
-    }
-
-    public Long userUnregistered(String userid) {
-        String internalUserIDSeed = userid.split("_")[0];
-        Long r = (Long) this.registeredUsers.remove(internalUserIDSeed);
-        return r;
-    }
-
-    public ConcurrentMap<String, Long> getRegisteredUsers() {
-        return registeredUsers;
     }
 }

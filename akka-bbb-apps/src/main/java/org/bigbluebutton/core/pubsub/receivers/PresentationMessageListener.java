@@ -138,7 +138,8 @@ public class PresentationMessageListener implements MessageHandler {
     				}
     			}
     			else {
-    				HashMap<String,String> map = new Gson().fromJson(message, new TypeToken<HashMap<String, String>>() {}.getType());
+    				Gson gson = new Gson();
+    				HashMap<String,String> map = gson.fromJson(message, new TypeToken<Map<String, String>>() {}.getType());
     				String code = (String) map.get("returnCode");
     				String presId = (String) map.get("presentationId");
     				String filename = (String) map.get("filename");

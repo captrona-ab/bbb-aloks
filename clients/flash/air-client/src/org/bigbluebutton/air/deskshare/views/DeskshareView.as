@@ -8,7 +8,7 @@ package org.bigbluebutton.air.deskshare.views {
 	import spark.components.Group;
 	import spark.components.Label;
 	
-	public class DeskshareView extends DeskshareViewBase implements IDeskshareViewAir {
+	public class DeskshareView extends DeskshareViewBase implements IDeskshareView {
 		private var deskshareVideoView:DeskshareVideoView;
 		
 		/**
@@ -28,8 +28,7 @@ package org.bigbluebutton.air.deskshare.views {
 			deskshareVideoView.percentWidth = 100;
 			deskshareVideoView.percentHeight = 100;
 			this.addElement(deskshareVideoView);
-			deskshareVideoView.initializeScreenSizeValues(width, height, this.deskshareGroup.height, this.deskshareGroup.width, FlexGlobals.topLevelApplication.topActionBar.height, FlexGlobals.topLevelApplication.bottomMenu.height);
-			deskshareVideoView.startStream(connection, name, streamName, userID);
+			deskshareVideoView.startStream(connection, name, streamName, userID, width, height, this.deskshareGroup.height, this.deskshareGroup.width, FlexGlobals.topLevelApplication.topActionBar.height, FlexGlobals.topLevelApplication.bottomMenu.height);
 			deskshareVideoView.addMouseToStage();
 			rotationHandler(FlexGlobals.topLevelApplication.currentOrientation);
 		}

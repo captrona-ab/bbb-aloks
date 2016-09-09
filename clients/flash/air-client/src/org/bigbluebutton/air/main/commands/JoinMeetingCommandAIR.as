@@ -2,14 +2,13 @@ package org.bigbluebutton.air.main.commands {
 	
 	import flash.net.URLRequest;
 	
-	import org.bigbluebutton.air.main.services.JoinService;
 	import org.bigbluebutton.lib.main.commands.ConnectSignal;
 	import org.bigbluebutton.lib.main.commands.ConnectingFailedSignal;
 	import org.bigbluebutton.lib.main.models.Config;
 	import org.bigbluebutton.lib.main.models.IConferenceParameters;
 	import org.bigbluebutton.lib.main.models.IUserSession;
 	import org.bigbluebutton.lib.main.services.ILoginService;
-	import org.bigbluebutton.lib.video.models.VideoProfileManager;
+	import org.bigbluebutton.air.main.services.JoinService;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
 	
@@ -44,7 +43,6 @@ package org.bigbluebutton.air.main.commands {
 		protected function joinSuccess(urlRequest:URLRequest, responseUrl:String):void {
 			loginService.loginSuccessSignal.add(loginSuccess);
 			loginService.getConfigSuccessSignal.add(configSuccess);
-			loginService.getProfilesSuccessSignal.add(profilesSuccess);
 			loginService.loginFailureSignal.add(joinFailure);
 			loginService.login(urlRequest, responseUrl);
 		}
@@ -59,12 +57,8 @@ package org.bigbluebutton.air.main.commands {
 			userSession.config = config;
 		}
 		
-		protected function profilesSuccess(profiles:VideoProfileManager):void {
-			userSession.videoProfileManager = profiles;
-		}
-		
 		protected function joinFailure(reason:String):void {
-			trace(LOG + "joinFailure()");
+			trace(LOG + "unsuccessJoined()");
 			connectingFailedSignal.dispatch(reason);
 		}
 	}

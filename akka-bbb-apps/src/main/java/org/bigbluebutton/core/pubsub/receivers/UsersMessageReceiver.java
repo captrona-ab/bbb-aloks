@@ -1,17 +1,40 @@
 
 package org.bigbluebutton.core.pubsub.receivers;
 
-import org.bigbluebutton.common.messages.*;
+import org.bigbluebutton.common.messages.AssignPresenterRequestMessage;
+import org.bigbluebutton.common.messages.BroadcastLayoutRequestMessage;
+import org.bigbluebutton.common.messages.EjectUserFromMeetingRequestMessage;
+import org.bigbluebutton.common.messages.EjectUserFromVoiceRequestMessage;
+import org.bigbluebutton.common.messages.GetCurrentLayoutRequestMessage;
+import org.bigbluebutton.common.messages.GetRecordingStatusRequestMessage;
+import org.bigbluebutton.common.messages.GetUsersRequestMessage;
+import org.bigbluebutton.common.messages.InitAudioSettingsMessage;
+import org.bigbluebutton.common.messages.InitPermissionsSettingMessage;
+import org.bigbluebutton.common.messages.IsMeetingMutedRequestMessage;
+import org.bigbluebutton.common.messages.LockLayoutRequestMessage;
+import org.bigbluebutton.common.messages.LockMuteUserRequestMessage;
+import org.bigbluebutton.common.messages.MessagingConstants;
+import org.bigbluebutton.common.messages.MuteAllExceptPresenterRequestMessage;
+import org.bigbluebutton.common.messages.MuteAllRequestMessage;
+import org.bigbluebutton.common.messages.MuteUserRequestMessage;
+import org.bigbluebutton.common.messages.SetRecordingStatusRequestMessage;
+import org.bigbluebutton.common.messages.SetUserStatusRequestMessage;
+import org.bigbluebutton.common.messages.UserJoinedVoiceConfMessage;
+import org.bigbluebutton.common.messages.UserLeavingMessage;
+import org.bigbluebutton.common.messages.UserLeftVoiceConfMessage;
+import org.bigbluebutton.common.messages.UserLockedInVoiceConfMessage;
+import org.bigbluebutton.common.messages.UserMutedInVoiceConfMessage;
+import org.bigbluebutton.common.messages.UserEmojiStatusMessage;
+import org.bigbluebutton.common.messages.UserShareWebcamRequestMessage;
+import org.bigbluebutton.common.messages.UserTalkingInVoiceConfMessage;
+import org.bigbluebutton.common.messages.UserUnshareWebcamRequestMessage;
+import org.bigbluebutton.common.messages.VoiceConfRecordingStartedMessage;
 import org.bigbluebutton.core.api.IBigBlueButtonInGW;
-import org.bigbluebutton.messages.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
 
 public class UsersMessageReceiver implements MessageHandler{
-	private static final Logger LOG = LoggerFactory.getLogger(UsersMessageReceiver.class);
 
 	private IBigBlueButtonInGW bbbInGW;
 	
@@ -22,6 +45,7 @@ public class UsersMessageReceiver implements MessageHandler{
 	@Override
 	public void handleMessage(String pattern, String channel, String message) {
 		if (channel.equalsIgnoreCase(MessagingConstants.TO_USERS_CHANNEL)) {
+//			System.out.println("Users message: " + channel + " " + message);
 			JsonParser parser = new JsonParser();
 			JsonObject obj = (JsonObject) parser.parse(message);
 			if (obj.has("header") && obj.has("payload")) {
@@ -32,9 +56,6 @@ public class UsersMessageReceiver implements MessageHandler{
 					switch (messageName) {
 					  case UserLeavingMessage.USER_LEAVING:
 						  processUserLeavingMessage(message);
-						  break;
-					  case AllowUserToShareDesktopRequest.NAME:
-						  processAllowUserToShareDesktopRequest(message);
 						  break;
 					  case AssignPresenterRequestMessage.ASSIGN_PRESENTER_REQUEST:
 						  processAssignPresenterRequestMessage(message);
@@ -56,7 +77,7 @@ public class UsersMessageReceiver implements MessageHandler{
 						  break;
 					  case SetRecordingStatusRequestMessage.SET_RECORDING_STATUS_REQUEST:
 						  processSetRecordingStatusRequestMessage(message);
-						  break; 
+						  break;
 					  case GetRecordingStatusRequestMessage.GET_RECORDING_STATUS_REQUEST:
 						  processGetRecordingStatusRequestMessage(message);
 						  break;
@@ -96,21 +117,7 @@ public class UsersMessageReceiver implements MessageHandler{
 					  case EjectUserFromVoiceRequestMessage.EJECT_USER_FROM_VOICE_REQUEST:
 						  processEjectUserFromVoiceRequestMessage(message);
 						  break;
-					  case GetBreakoutRoomsList.NAME:
-						  bbbInGW.handleJsonMessage(message);
-						  break;
-					  case CreateBreakoutRoomsRequest.NAME:
-						  bbbInGW.handleJsonMessage(message);
-						  break;
-					  case ListenInOnBreakout.NAME:
-						  bbbInGW.handleJsonMessage(message);
-						  break;
-					  case RequestBreakoutJoinURL.NAME:
-						  bbbInGW.handleJsonMessage(message);
-						  break;
-					  case EndAllBreakoutRoomsRequest.NAME:
-						  bbbInGW.handleJsonMessage(message);
-						  break;
+						  
 					}
 				}
 			}
@@ -151,7 +158,7 @@ public class UsersMessageReceiver implements MessageHandler{
 	private void processUserJoinedVoiceConfMessage(String json) {
 		UserJoinedVoiceConfMessage msg = UserJoinedVoiceConfMessage.fromJson(json);
 		if (msg != null) {
-			bbbInGW.voiceUserJoined(msg.voiceConfId, msg.voiceUserId, msg.userId, msg.callerIdName, msg.callerIdNum, msg.muted, msg.avatarURL, msg.talking);
+			bbbInGW.voiceUserJoined(msg.voiceConfId, msg.voiceUserId, msg.userId, msg.callerIdName, msg.callerIdNum, msg.muted, msg.talking);
 		}
 	}
 
@@ -196,14 +203,7 @@ public class UsersMessageReceiver implements MessageHandler{
 			  bbbInGW.userLeft(ulm.meetingId, ulm.userId, ulm.meetingId);
 		  }		
 	}
-
-    private void processAllowUserToShareDesktopRequest(String message) {
-        AllowUserToShareDesktopRequest msg = AllowUserToShareDesktopRequest.fromJson(message);
-        if (msg != null) {
-            bbbInGW.checkIfAllowedToShareDesktop(msg.meetingId, msg.userId);
-        }
-    }
-
+	
 	private void processAssignPresenterRequestMessage(String message) {
 		AssignPresenterRequestMessage apm = AssignPresenterRequestMessage.fromJson(message);
 		if (apm != null) {
@@ -341,6 +341,6 @@ public class UsersMessageReceiver implements MessageHandler{
 		EjectUserFromVoiceRequestMessage msg = EjectUserFromVoiceRequestMessage.fromJson(message);
 		if (msg != null) {
 			bbbInGW.ejectUserFromVoice(msg.meetingId, msg.userId, msg.requesterId);
-		}
+		}		
 	}
 }

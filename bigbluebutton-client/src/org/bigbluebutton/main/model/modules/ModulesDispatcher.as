@@ -30,7 +30,6 @@ package org.bigbluebutton.main.model.modules
   import org.bigbluebutton.main.api.JSLog;
   import org.bigbluebutton.main.events.BBBEvent;
   import org.bigbluebutton.main.events.ConfigEvent;
-  import org.bigbluebutton.main.events.ConfigLoadedEvent;
   import org.bigbluebutton.main.events.ModuleLoadEvent;
   import org.bigbluebutton.main.events.PortTestEvent;
   import org.bigbluebutton.main.events.UserServicesEvent;
@@ -50,7 +49,7 @@ package org.bigbluebutton.main.model.modules
       dispatcher = new Dispatcher();
       
     }
-	
+    
     public function sendLoadProgressEvent(moduleName:String, loadProgress:Number):void{
       var loadEvent:ModuleLoadEvent = new ModuleLoadEvent(ModuleLoadEvent.MODULE_LOAD_PROGRESS);
       loadEvent.moduleName = moduleName;
@@ -80,8 +79,7 @@ package org.bigbluebutton.main.model.modules
     }
     
     public function sendPortTestEvent():void {     
-      //getMeetingAndUserInfo();
-	  doPortTesting();
+      getMeetingAndUserInfo();
     }
     
     private function getMeetingAndUserInfo():void {
@@ -161,8 +159,9 @@ package org.bigbluebutton.main.model.modules
       
     }
     
-    public function sendModuleLoadingStartedEvent():void{
+    public function sendModuleLoadingStartedEvent(modules:XMLList):void{
       var event:ModuleLoadEvent = new ModuleLoadEvent(ModuleLoadEvent.MODULE_LOADING_STARTED);
+      event.modules = modules;
       dispatcher.dispatchEvent(event);
     }
     

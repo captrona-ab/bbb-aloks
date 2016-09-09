@@ -70,17 +70,6 @@ def archive_deskshare(meeting_id, deskshare_dir, raw_archive_dir)
   end
 end
 
-def archive_screenshare(meeting_id, deskshare_dir, raw_archive_dir)
-  BigBlueButton.logger.info("Archiving screenshare for #{meeting_id}.")
-  begin
-    deskshare_dest_dir = "#{raw_archive_dir}/#{meeting_id}/deskshare"
-    FileUtils.mkdir_p deskshare_dest_dir
-    BigBlueButton::DeskshareArchiver.archive(meeting_id, "#{deskshare_dir}/#{meeting_id}", deskshare_dest_dir)
-  rescue => e
-    BigBlueButton.logger.warn("Failed to archive screenshare for #{meeting_id}. " + e.to_s)
-  end
-end
-
 def archive_presentation(meeting_id, presentation_dir, raw_archive_dir)
   BigBlueButton.logger.info("Archiving presentation for #{meeting_id}.")
   begin
@@ -122,7 +111,6 @@ audio_dir = props['raw_audio_src']
 recording_dir = props['recording_dir']
 raw_archive_dir = "#{recording_dir}/raw"
 deskshare_dir = props['raw_deskshare_src']
-screenshare_dir = props['raw_screenshare_src']
 redis_host = props['redis_host']
 redis_port = props['redis_port']
 presentation_dir = props['raw_presentation_src']
@@ -138,7 +126,6 @@ if not FileTest.directory?(target_dir)
   archive_audio(meeting_id, audio_dir, raw_archive_dir)
   archive_presentation(meeting_id, presentation_dir, raw_archive_dir)
   archive_deskshare(meeting_id, deskshare_dir, raw_archive_dir)
-  archive_screenshare(meeting_id, screenshare_dir, raw_archive_dir)
   archive_video(meeting_id, video_dir, raw_archive_dir)
 
   if not archive_has_recording_marks?(meeting_id, raw_archive_dir)

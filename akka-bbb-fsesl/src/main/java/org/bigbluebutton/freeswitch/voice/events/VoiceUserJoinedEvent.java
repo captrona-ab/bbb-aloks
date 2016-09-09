@@ -27,11 +27,10 @@ public class VoiceUserJoinedEvent extends VoiceConferenceEvent {
 	private final Boolean speaking;
 	private final Boolean locked = false;
 	private final String userId;
-	private final String avatarURL;
 	
 	public VoiceUserJoinedEvent(String userId, String voiceUserId, String room, 
 								String callerIdNum, String callerIdName,
-								Boolean muted, Boolean speaking, String avatarURL) {
+								Boolean muted, Boolean speaking) {
 		super(room);
 		this.userId = userId;
 		this.voiceUserId = voiceUserId;
@@ -39,7 +38,6 @@ public class VoiceUserJoinedEvent extends VoiceConferenceEvent {
 		this.callerIdNum = callerIdNum;
 		this.muted = muted;
 		this.speaking = speaking;
-		this.avatarURL = avatarURL;
 	}
 
 	public String getUserId() {
@@ -68,9 +66,5 @@ public class VoiceUserJoinedEvent extends VoiceConferenceEvent {
 	
 	public Boolean isLocked() {
 		return locked;
-	}
-
-	public String getAvatarURL() {
-		return avatarURL;
 	}
 }

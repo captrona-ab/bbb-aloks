@@ -1,12 +1,12 @@
 package org.bigbluebutton.core.apps
 
 import org.bigbluebutton.core.api._
+import org.bigbluebutton.core.MeetingActor
 import com.google.gson.Gson
 import org.bigbluebutton.core.OutMessageGateway
-import org.bigbluebutton.core.LiveMeeting
 
 trait PresentationApp {
-  this: LiveMeeting =>
+  this: MeetingActor =>
 
   val outGW: OutMessageGateway
 
@@ -75,6 +75,8 @@ trait PresentationApp {
   }
 
   def handleGetPresentationInfo(msg: GetPresentationInfo) {
+    //      println("PresentationApp : handleGetPresentationInfo GetPresentationInfo for meeting [" + msg.meetingID + "] [" + msg.requesterID + "]" )
+
     val curPresenter = usersModel.getCurrentPresenterInfo();
     val presenter = new CurrentPresenter(curPresenter.presenterID, curPresenter.presenterName, curPresenter.assignedBy)
     val presentations = presModel.getPresentations
@@ -106,7 +108,7 @@ trait PresentationApp {
     //      printPresentations
 
     usersModel.getCurrentPresenter() foreach { pres =>
-      handleStopPollRequest(StopPollRequest(mProps.meetingID, pres.userID))
+      this.context.self ! StopPollRequest(mProps.meetingID, pres.userID)
     }
 
   }

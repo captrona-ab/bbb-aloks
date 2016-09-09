@@ -1,17 +1,16 @@
 package org.bigbluebutton.core.apps
 
 import org.bigbluebutton.core.api._
+import org.bigbluebutton.core.MeetingActor
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.ArrayBuffer
-import org.bigbluebutton.common.messages.WhiteboardKeyUtil
-// import org.bigbluebutton.core.service.whiteboard.WhiteboardKeyUtil
+import org.bigbluebutton.core.service.whiteboard.WhiteboardKeyUtil
 import com.google.gson.Gson
 import java.util.ArrayList
 import org.bigbluebutton.core.OutMessageGateway
-import org.bigbluebutton.core.LiveMeeting
 
 trait PollApp {
-  this: LiveMeeting =>
+  this: MeetingActor =>
 
   val outGW: OutMessageGateway
 
@@ -46,7 +45,8 @@ trait PollApp {
         handleRespondToPoll(poll, msg)
       }
       case None => {
-
+        val result = new RequestResult(StatusCodes.NOT_FOUND, Some(Array(ErrorCodes.RESOURCE_NOT_FOUND)))
+        sender ! new RespondToPollReplyMessage(mProps.meetingID, mProps.recorded, result, msg.requesterId, msg.pollId)
       }
     }
   }
@@ -58,7 +58,8 @@ trait PollApp {
         outGW.send(new PollHideResultMessage(mProps.meetingID, mProps.recorded, msg.requesterId, msg.pollId))
       }
       case None => {
-
+        val result = new RequestResult(StatusCodes.NOT_FOUND, Some(Array(ErrorCodes.RESOURCE_NOT_FOUND)))
+        sender ! new HidePollResultReplyMessage(mProps.meetingID, mProps.recorded, result, msg.requesterId, msg.pollId)
       }
     }
   }
@@ -105,13 +106,14 @@ trait PollApp {
         for {
           page <- presModel.getCurrentPage()
           annotation = new AnnotationVO(poll.id, WhiteboardKeyUtil.DRAW_END_STATUS, WhiteboardKeyUtil.POLL_RESULT_TYPE, shape, page.id)
-        } handleSendWhiteboardAnnotationRequest(new SendWhiteboardAnnotationRequest(mProps.meetingID, msg.requesterId, annotation))
+        } this.context.self ! new SendWhiteboardAnnotationRequest(mProps.meetingID, msg.requesterId, annotation)
 
         outGW.send(new PollShowResultMessage(mProps.meetingID, mProps.recorded, msg.requesterId, msg.pollId, poll))
 
       }
       case None => {
-
+        val result = new RequestResult(StatusCodes.NOT_FOUND, Some(Array(ErrorCodes.RESOURCE_NOT_FOUND)))
+        sender ! new ShowPollResultReplyMessage(mProps.meetingID, mProps.recorded, result, msg.requesterId, msg.pollId)
       }
     }
   }
@@ -128,7 +130,8 @@ trait PollApp {
         outGW.send(new PollStoppedMessage(mProps.meetingID, mProps.recorded, msg.requesterId, poll.id))
       }
       case None => {
-
+        val result = new RequestResult(StatusCodes.NOT_FOUND, Some(Array(ErrorCodes.RESOURCE_NOT_FOUND)))
+        sender ! new StopPollReplyMessage(mProps.meetingID, mProps.recorded, result, msg.requesterId)
       }
     }
   }
@@ -148,7 +151,8 @@ trait PollApp {
           outGW.send(new PollStartedMessage(mProps.meetingID, mProps.recorded, msg.requesterId, pollId, poll))
         }
         case None => {
-
+          val result = new RequestResult(StatusCodes.NOT_FOUND, Some(Array(ErrorCodes.RESOURCE_NOT_FOUND)))
+          sender ! new StartPollReplyMessage(mProps.meetingID, mProps.recorded, result, msg.requesterId, pollId)
         }
       }
     }
@@ -169,7 +173,8 @@ trait PollApp {
           outGW.send(new PollStartedMessage(mProps.meetingID, mProps.recorded, msg.requesterId, pollId, poll))
         }
         case None => {
-
+          val result = new RequestResult(StatusCodes.NOT_FOUND, Some(Array(ErrorCodes.RESOURCE_NOT_FOUND)))
+          sender ! new StartPollReplyMessage(mProps.meetingID, mProps.recorded, result, msg.requesterId, pollId)
         }
       }
     }
@@ -198,7 +203,8 @@ trait PollApp {
 
         }
         case None => {
-
+          val result = new RequestResult(StatusCodes.FORBIDDEN, Some(Array(ErrorCodes.RESOURCE_NOT_FOUND)))
+          sender ! new RespondToPollReplyMessage(mProps.meetingID, mProps.recorded, result, msg.requesterId, msg.pollId)
         }
       }
     }

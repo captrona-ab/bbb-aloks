@@ -19,27 +19,22 @@
 
 package org.bigbluebutton.api.messaging;
 
-import org.bigbluebutton.web.services.turn.StunServer;
-import org.bigbluebutton.web.services.turn.TurnEntry;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public interface MessagingService {	
 	void recordMeetingInfo(String meetingId, Map<String, String> info);
 	void destroyMeeting(String meetingID);
 	void createMeeting(String meetingID, String externalMeetingID, String meetingName, Boolean recorded, 
-			      String voiceBridge, Integer duration, Boolean autoStartRecording,
+			      String voiceBridge, Long duration, Boolean autoStartRecording,
 			      Boolean allowStartStopRecording, String moderatorPass, String viewerPass,
-			      Long createTime, String createDate, Boolean isBreakout);
+			      Long createTime, String createDate);
 	void endMeeting(String meetingId);
 	void send(String channel, String message);
 	void sendPolls(String meetingId, String title, String question, String questionType, List<String> answers);
 	String storeSubscription(String meetingId, String externalMeetingID, String callbackURL);
 	boolean removeSubscription(String meetingId, String subscriptionId);
 	List<Map<String,String>> listSubscriptions(String meetingId);
-	void registerUser(String meetingID, String internalUserId, String fullname, String role, String externUserID, String authToken, String avatarURL);
+	void registerUser(String meetingID, String internalUserId, String fullname, String role, String externUserID, String authToken);
 	void sendKeepAlive(String system, Long timestamp);
-	void sendStunTurnInfo(String meetingId, String internalUserId, Set<StunServer> stuns, Set<TurnEntry> turns);
 }

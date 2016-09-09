@@ -144,29 +144,26 @@ function createUA(username, server, callback, makeCallFunc) {
 
 	console.log("Fetching STUN/TURN server info for user agent");
 
-  BBB.getSessionToken(function(sessionToken) {
-  	$.ajax({
-  		dataType: 'json',
-  		url: '/bigbluebutton/api/stuns',
-  		data: {sessionToken:sessionToken}
-  	}).done(function(data) {
-  		var stunsConfig = {};
-  		stunsConfig['stunServers'] = ( data['stunServers'] ? data['stunServers'].map(function(data) {
-  			return data['url'];
-  		}) : [] );
-  		stunsConfig['turnServers'] = ( data['turnServers'] ? data['turnServers'].map(function(data) {
-  			return {
-  				'urls': data['url'],
-  				'username': data['username'],
-  				'password': data['password']
-  			};
-  		}) : [] );
-  		createUAWithStuns(username, server, callback, stunsConfig, makeCallFunc);
-  	}).fail(function(data, textStatus, errorThrown) {
-  		BBBLog.error("Could not fetch stun/turn servers", {error: textStatus, user: callerIdName, voiceBridge: conferenceVoiceBridge});
-  		callback({'status':'failed', 'errorcode': 1009});
-  	});
-  });
+	$.ajax({
+		dataType: 'json',
+		url: '/bigbluebutton/api/stuns'
+	}).done(function(data) {
+		var stunsConfig = {};
+		stunsConfig['stunServers'] = ( data['stunServers'] ? data['stunServers'].map(function(data) {
+			return data['url'];
+		}) : [] );
+		stunsConfig['turnServers'] = ( data['turnServers'] ? data['turnServers'].map(function(data) {
+			return {
+				'urls': data['url'],
+				'username': data['username'],
+				'password': data['password']
+			};
+		}) : [] );
+		createUAWithStuns(username, server, callback, stunsConfig, makeCallFunc);
+	}).fail(function(data, textStatus, errorThrown) {
+		BBBLog.error("Could not fetch stun/turn servers", {error: textStatus, user: callerIdName, voiceBridge: conferenceVoiceBridge});
+		callback({'status':'failed', 'errorcode': 1009});
+	});
 }
 
 function createUAWithStuns(username, server, callback, stunsConfig, makeCallFunc) {
@@ -196,13 +193,13 @@ function createUAWithStuns(username, server, callback, stunsConfig, makeCallFunc
 };
 
 function setUserAgentListeners(callback, makeCallFunc) {
-	console.log("resetting UA callbacks");
-	userAgent.removeAllListeners('connected');
+	console.log("reseting UA callbacks");
+	userAgent.off('connected');
 	userAgent.on('connected', function() {
 		uaConnected = true;
 		makeCallFunc();
 	});
-	userAgent.removeAllListeners('disconnected');
+	userAgent.off('disconnected');
 	userAgent.on('disconnected', function() {
 		if (userAgent) {
 			if (userAgent != null) {
@@ -325,12 +322,11 @@ function make_call(username, voiceBridge, server, callback, recall, isListenOnly
 		options = {
 			media: {
 				stream: stream, // use the stream created above
-				constraints: {
-					audio: true,
-					video: false
-				},
 				render: {
-					remote: document.getElementById('remote-media')
+					remote: {
+						// select an element to render the incoming stream data
+						audio: document.getElementById('remote-media')
+					}
 				}
 			},
 			// a list of our RTC Connection constraints
@@ -346,12 +342,10 @@ function make_call(username, voiceBridge, server, callback, recall, isListenOnly
 		options = {
 			media: {
 				stream: userMicMedia,
-				constraints: {
-					audio: true,
-					video: false
-				},
 				render: {
-					remote: document.getElementById('remote-media')
+					remote: {
+						audio: document.getElementById('remote-media')
+					}
 				}
 			}
 		};
@@ -383,7 +377,6 @@ function make_call(username, voiceBridge, server, callback, recall, isListenOnly
 		console.log('call connecting again');
 	}
 	
-	/*
 	iceGatheringTimeout = setTimeout(function() {
 		console.log('Thirty seconds without ICE gathering finishing');
 		callback({'status':'failed', 'errorcode': 1011}); // ICE Gathering Failed
@@ -394,9 +387,8 @@ function make_call(username, voiceBridge, server, callback, recall, isListenOnly
 			userAgentTemp.stop();
 		}
 	}, 30000);
-	*/
 	
-	currentSession.mediaHandler.on('iceGatheringComplete', function() {
+	currentSession.mediaHandler.on('iceComplete', function() {
 		clearTimeout(iceGatheringTimeout);
 	});
 	
@@ -470,7 +462,7 @@ function make_call(username, voiceBridge, server, callback, recall, isListenOnly
 		}
 		clearTimeout(callTimeout);
 	});
-	currentSession.mediaHandler.on('iceConnectionFailed', function() {
+	currentSession.mediaHandler.on('iceFailed', function() {
 		console.log('received ice negotiation failed');
 		callback({'status':'failed', 'errorcode': 1007}); // Failure on call
 		currentSession = null;
@@ -486,7 +478,7 @@ function make_call(username, voiceBridge, server, callback, recall, isListenOnly
 	
 	// Some browsers use status of 'connected', others use 'completed', and a couple use both
 	
-	currentSession.mediaHandler.on('iceConnectionConnected', function() {
+	currentSession.mediaHandler.on('iceConnected', function() {
 		console.log('Received ICE status changed to connected');
 		if (callICEConnected === false) {
 			callICEConnected = true;
@@ -498,7 +490,7 @@ function make_call(username, voiceBridge, server, callback, recall, isListenOnly
 		}
 	});
 	
-	currentSession.mediaHandler.on('iceConnectionCompleted', function() {
+	currentSession.mediaHandler.on('iceCompleted', function() {
 		console.log('Received ICE status changed to completed');
 		if (callICEConnected === false) {
 			callICEConnected = true;
@@ -528,4 +520,3 @@ function isWebRTCAvailable() {
 function getCallStatus() {
 	return currentSession;
 }
-

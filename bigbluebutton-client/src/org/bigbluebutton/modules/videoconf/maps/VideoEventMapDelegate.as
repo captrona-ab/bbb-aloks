@@ -418,20 +418,21 @@ package org.bigbluebutton.modules.videoconf.maps
     public function stopModule():void {
       LOGGER.debug("VideoEventMapDelegate:: stopping video module");
       closeAllWindows();
-      var event:CloseWindowEvent = new CloseWindowEvent(CloseWindowEvent.CLOSE_WINDOW_EVENT);
-      event.window = _videoDock;
-      globalDispatcher.dispatchEvent(event);
 	  proxy.reconnectWhenDisconnected(false);
       proxy.disconnect();
     }
 
-    private function closeAllWindows():void {
+    public function closeAllWindows():void{
       LOGGER.debug("VideoEventMapDelegate:: closing all windows");
       if (_isPublishing) {
         stopBroadcasting();
       }
 
       _graphics.shutdown();
+	  
+	  var event:CloseWindowEvent = new CloseWindowEvent(CloseWindowEvent.CLOSE_WINDOW_EVENT);
+	  event.window = _videoDock;
+	  globalDispatcher.dispatchEvent(event);
     }
 
     public function switchToPresenter(event:MadePresenterEvent):void{
@@ -513,10 +514,6 @@ package org.bigbluebutton.modules.videoconf.maps
         LOGGER.debug("VideoEventMapDelegate::handleStoppedViewingWebcamEvent [{0}] Opening avatar for user [{1}]", [me, event.webcamUserID]);
         openAvatarWindowFor(event.webcamUserID);
       }
-    }
-
-    public function handleReconnectDisconnectedEvent(event:BBBEvent):void {
-      if (event.payload.type == "BIGBLUEBUTTON_CONNECTION") closeAllWindows();
     }
   }
 }

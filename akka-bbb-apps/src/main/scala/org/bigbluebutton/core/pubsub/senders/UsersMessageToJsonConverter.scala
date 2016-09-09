@@ -23,7 +23,6 @@ object UsersMessageToJsonConverter {
     wuser += "webcam_stream" -> user.webcamStreams.toArray
     wuser += "phone_user" -> user.phoneUser
     wuser += "listenOnly" -> user.listenOnly
-    wuser += "avatarURL" -> user.avatarURL
 
     val vuser = new scala.collection.mutable.HashMap[String, Any]
     vuser += "userid" -> user.voiceUser.userId
@@ -47,7 +46,6 @@ object UsersMessageToJsonConverter {
     wuser += "name" -> user.name
     wuser += "role" -> user.role.toString()
     wuser += "authToken" -> user.authToken
-    wuser += "avatarURL" -> user.avatarURL
 
     mapAsJavaMap(wuser)
   }

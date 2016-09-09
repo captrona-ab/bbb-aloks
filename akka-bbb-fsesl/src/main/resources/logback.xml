@@ -22,7 +22,7 @@
     <logger name="org.bigbluebutton" level="DEBUG" />
     <logger name="org.freeswitch.esl" level="WARN" />
     
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE" />
     </root>

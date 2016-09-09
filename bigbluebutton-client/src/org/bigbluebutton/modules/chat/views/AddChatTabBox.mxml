@@ -75,7 +75,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
                 lockSettingsChanged();
             }
             
-            public function onUserListKeyDown(event:KeyboardEvent):void{
+            public function accessibleClick(event:KeyboardEvent):void{
                 if (event.keyCode == 32){
                     openPrivateChat(event);
                 }
@@ -148,8 +148,7 @@ with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
              visible="{chatOptions.privateEnabled}" includeInLayout="{chatOptions.privateEnabled}"
              itemRenderer="org.bigbluebutton.modules.chat.views.UserRenderer"
              labelField="name"
-             itemClick="openPrivateChat(event)"
-             keyDown="onUserListKeyDown(event)"
+             itemClick="openPrivateChat(event)" 
              toolTip="{ResourceUtil.getInstance().getString('bbb.chat.usersList.toolTip')}"
              accessibilityName="{ResourceUtil.getInstance().getString('bbb.chat.usersList.accessibilityName')}"/>
     <mx:Label styleName="chatOptionsLabel" text="{ResourceUtil.getInstance().getString('bbb.chat.chatOptions')}" />

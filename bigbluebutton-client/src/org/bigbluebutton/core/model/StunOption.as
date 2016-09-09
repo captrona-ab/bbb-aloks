@@ -7,7 +7,7 @@ package org.bigbluebutton.core.model
     public var stuns: String = "";
     
     public function parseOptions():void {
-      stuns =  BBB.getConfigManager().config.application.stuns;
+      stuns =  BBB.initConfigManager().config.application.stuns;
     }
   }
 }

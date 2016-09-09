@@ -4,7 +4,6 @@ package org.bigbluebutton.air.video.commands {
 	
 	import org.bigbluebutton.lib.main.models.IUserSession;
 	import org.bigbluebutton.lib.user.services.IUsersService;
-	import org.bigbluebutton.lib.video.models.VideoProfile;
 	
 	import robotlegs.bender.bundles.mvcs.Command;
 	
@@ -35,11 +34,7 @@ package org.bigbluebutton.air.video.commands {
 			var d:Date = new Date();
 			var curTime:Number = d.getTime();
 			var uid:String = userSession.userId;
-			if (userSession.videoProfileManager == null) {
-				trace("null video profile manager");
-			}
-			var videoProfile:VideoProfile = userSession.videoConnection.selectedCameraQuality;
-			var res:String = videoProfile.id;
+			var res:String = camWidth + "x" + camHeight;
 			return res.concat("-" + uid) + "-" + curTime;
 		}
 		
@@ -100,8 +95,8 @@ package org.bigbluebutton.air.video.commands {
 		}
 		
 		private function disableCamera():void {
-			usersService.removeStream(userSession.userId, userSession.userList.me.streamName);
-			userSession.videoConnection.stopPublishing(setupCamera(position));
+			usersService.removeStream(userSession.userId, "");
+			userSession.videoConnection.stopPublishing();
 		}
 	}
 }

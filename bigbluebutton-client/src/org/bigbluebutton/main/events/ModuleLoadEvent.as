@@ -32,6 +32,8 @@ package org.bigbluebutton.main.events
 		public var moduleName:String;
 		public var progress:Number;
 		
+
+		public var modules:XMLList;
 		
 		public function ModuleLoadEvent(type:String)
 		{

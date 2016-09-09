@@ -30,18 +30,16 @@ public class User {
 	private String externalUserId;
 	private String fullname;
 	private String role;
-	private String avatarURL;
 	private Map<String,String> status;
 	private Boolean listeningOnly = false;
 	private Boolean voiceJoined = false;
 	private List<String> streams;
 	
-	public User(String internalUserId, String externalUserId, String fullname, String role, String avatarURL) {
+	public User(String internalUserId, String externalUserId, String fullname, String role) {
 		this.internalUserId = internalUserId;
 		this.externalUserId = externalUserId;
 		this.fullname = fullname;
 		this.role = role;
-		this.avatarURL = avatarURL;
 		this.status = new ConcurrentHashMap<String, String>();
 		this.streams = Collections.synchronizedList(new ArrayList<String>());
 	}
@@ -72,14 +70,6 @@ public class User {
 	}
 	public void setRole(String role) {
 		this.role = role;
-	}
-
-	public String getAvatarUrl() {
-		return avatarURL;
-	}
-
-	public void setAvatarUrl(String avatarURL) {
-		this.avatarURL = avatarURL;
 	}
 
 	public boolean isModerator() {

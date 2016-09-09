@@ -63,14 +63,6 @@ package org.bigbluebutton.main.model.modules
 			return modulesManager.portTestTimeout;
 		}
 		
-		public function handleConfigLoaded():void {
-			modulesManager.configLoaded();	
-		}
-		
-		public function handleLoadConfig():void {
-			modulesManager.loadConfig();
-		}
-		
 		public function testRTMP():void{
 			portTestProxy.connect("RTMP", getPortTestHost(), "1935", getPortTestApplication(), getPortTestTimeout());
 		}

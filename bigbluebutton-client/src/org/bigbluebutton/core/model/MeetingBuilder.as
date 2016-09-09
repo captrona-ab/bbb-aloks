@@ -6,7 +6,6 @@ package org.bigbluebutton.core.model
     internal var name:String;
     internal var voiceConf:String;
     internal var externId:String;
-	internal var isBreakout:Boolean;
     internal var defaultAvatarUrl:String;
     internal var dialNumber:String;
     internal var recorded:Boolean;
@@ -29,11 +28,6 @@ package org.bigbluebutton.core.model
       externId = value;
       return this;
     }
-	
-	public function withBreakout(value : Boolean):MeetingBuilder {
-		isBreakout = value;
-		return this;
-	}
 
     public function withDefaultAvatarUrl(value: String):MeetingBuilder {
       defaultAvatarUrl = value;

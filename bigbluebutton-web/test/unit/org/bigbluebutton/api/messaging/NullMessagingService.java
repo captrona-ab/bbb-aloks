@@ -85,7 +85,7 @@ public class NullMessagingService implements MessagingService {
 
 	@Override
   public void registerUser(String meetingID, String internalUserId,
-      String fullname, String role, String externUserID, String authToken, String avatarURL) {
+      String fullname, String role, String externUserID, String authToken) {
 	  // TODO Auto-generated method stub
 	  
   }

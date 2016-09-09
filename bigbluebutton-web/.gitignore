@@ -3,7 +3,6 @@
 stacktrace.log
 lib
 web-app/demo/bbb_api_conf.jsp
-target/*
-bin/*
+target
 plugins/*
 /bin/

@@ -2,7 +2,6 @@ package org.bigbluebutton.air.main.models {
 	
 	import mx.collections.ArrayList;
 	
-	import org.bigbluebutton.air.common.TransitionAnimationEnum;
 	import org.osflash.signals.ISignal;
 	import org.osflash.signals.Signal;
 	
@@ -67,17 +66,15 @@ package org.bigbluebutton.air.main.models {
 			return s;
 		}
 		
-		public function pushPage(value:String, details:Object = null, animation:int = TransitionAnimationEnum.APPEAR):void {
+		public function pushPage(value:String, details:Object, animation:int):void {
 			if (value != currentPage) {
 				_listPages.addItem({value: value, details: details});
 				var removeView:Boolean = false;
 				_pageChangedSignal.dispatch(currentPage, removeView, animation);
-			} else if (details) {
-				_listPages.addItem({value: value, details: details});
 			}
 		}
 		
-		public function popPage(animation:int = TransitionAnimationEnum.APPEAR):void {
+		public function popPage(animation:int):void {
 			if (_listPages.length > 0) {
 				_listPages.removeItemAt(_listPages.length - 1);
 				var removeView:Boolean = true;
@@ -105,16 +102,6 @@ package org.bigbluebutton.air.main.models {
 		public function set loading(value:Boolean):void {
 			_loading = value;
 			_loadingSignal.dispatch(_loading);
-		}
-		
-		private var _currentStreamName:String = "";
-		
-		public function get currentStreamName():String {
-			return _currentStreamName;
-		}
-		
-		public function set currentStreamName(value:String):void {
-			_currentStreamName = value;
 		}
 	}
 }

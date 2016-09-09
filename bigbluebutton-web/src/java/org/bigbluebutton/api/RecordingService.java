@@ -76,14 +76,8 @@ public class RecordingService {
 
         for (String recordID : recordIDs) {
             for (Map.Entry<String, List<File>> entry : allDirectories.entrySet()) {
-                List<File> _recs = getRecordingsForPath(recordID, entry.getValue());
-                Iterator<File> iterator = _recs.iterator();
-                while (iterator.hasNext()) {
-                    Recording r = getRecordingInfo(iterator.next());
-                    if (r != null) {
-                        recs.add(r);
-                    }
-                }
+                List<Recording> _recs = getRecordingsForPath(recordID, entry.getValue());
+                recs.addAll(_recs);
             }
         }
 
@@ -171,14 +165,16 @@ public class RecordingService {
         return ids;
     }
 
-    private List<File> getRecordingsForPath(String id, List<File> recordings) {
-        List<File> recs = new ArrayList<File>();
+    private List<Recording> getRecordingsForPath(String id, List<File> recordings) {
+        List<Recording> recs = new ArrayList<Recording>();
 
         Iterator<File> iterator = recordings.iterator();
         while (iterator.hasNext()) {
-            File rec = iterator.next();
-            if (rec.getName().startsWith(id)) {
-              recs.add(rec);
+            File recording = iterator.next();
+            if (recording.getName().startsWith(id)) {
+                Recording r = getRecordingInfo(recording);
+                if (r != null)
+                    recs.add(r);
             }
         }
         return recs;
@@ -353,7 +349,16 @@ public class RecordingService {
     private List<File> getAllDirectories(String state) {
         List<File> allDirectories = new ArrayList<File>();
 
-        String dir = getDestinationBaseDirectoryName(state);
+        String dir = null;
+        if( state.equals(Recording.STATE_PUBLISHED) ) {
+            dir = publishedDir;
+        } else if ( state.equals(Recording.STATE_UNPUBLISHED) ){
+            dir = unpublishedDir;
+        } else if ( state.equals(Recording.STATE_DELETED) ){
+            dir = deletedDir;
+        } else if ( state.equals(Recording.STATE_PROCESSING) || state.equals(Recording.STATE_PROCESSED) ){
+            dir = processDir;
+        }
 
         if ( dir != null ) {
             String[] formats = getPlaybackFormats(dir);
@@ -394,81 +399,6 @@ public class RecordingService {
         }
 
         return allDirectories;
-    }
-
-    public void updateMetaParams(List<String> recordIDs, Map<String,String> metaParams) {
-
-        // Define the directories used to lookup the recording
-        List<String> states = new ArrayList<String>();
-        states.add(Recording.STATE_PUBLISHED);
-        states.add(Recording.STATE_UNPUBLISHED);
-        states.add(Recording.STATE_DELETED);
-
-        // Gather all the existent directories based on the states defined for the lookup
-        Map<String, List<File>> allDirectories = getAllDirectories(states);
-
-        // Retrieve the actual recording from the directories gathered for the lookup
-        for (String recordID : recordIDs) {
-            for (Map.Entry<String, List<File>> entry : allDirectories.entrySet()) {
-                List<File> recs = getRecordingsForPath(recordID, entry.getValue());
-                // Lookup the target recording
-                Map<String,File> recsIndexed = indexRecordings(recs);
-                if ( recsIndexed.containsKey(recordID) ) {
-                    File recFile = recsIndexed.get(recordID);
-                    Recording rec = getRecordingInfo(recFile);
-                    if (rec != null) {
-                        for (Map.Entry<String,String> meta : metaParams.entrySet()) {
-                            if ( !"".equals(meta.getValue()) ) {
-                                // As it has a value, if the meta parameter exists update it, otherwise add it
-                                rec.updateMetadata(meta.getKey(), meta.getValue());
-                            } else {
-                                // As it doesn't have a value, if it exists delete it
-                                if ( rec.containsMetadata(meta.getKey()) ) {
-                                    rec.deleteMetadata(meta.getKey());
-                                }
-                            }
-                        }
-                        // Process the changes by saving the recording into metadata.xml
-                        recordingServiceHelper.writeRecordingInfo(recFile.getAbsolutePath(), rec);
-                    }
-                }
-            }
-        }
-
-        return;
-    }
-
-    private Map<String,File> indexRecordings(List<File> recs) {
-        Map<String,File> indexedRecs = new HashMap<String,File>();
-
-        Iterator<File> iterator = recs.iterator();
-        while (iterator.hasNext()) {
-            File rec = iterator.next();
-            indexedRecs.put(rec.getName(), rec);
-        }
-
-        return indexedRecs;
-    }
-
-    private String getDestinationBaseDirectoryName(String state) {
-        return getDestinationBaseDirectoryName(state, false);
-    }
-
-    private String getDestinationBaseDirectoryName(String state, boolean forceDefault) {
-        String baseDir = null;
-
-        if ( state.equals(Recording.STATE_PROCESSING) || state.equals(Recording.STATE_PROCESSED) )
-            baseDir = processDir;
-        else if ( state.equals(Recording.STATE_PUBLISHED) )
-            baseDir = publishedDir;
-        else if ( state.equals(Recording.STATE_UNPUBLISHED) )
-            baseDir = unpublishedDir;
-        else if ( state.equals(Recording.STATE_DELETED) )
-            baseDir = deletedDir;
-        else if ( forceDefault )
-            baseDir = publishedDir;
-
-        return baseDir;
     }
 
 }

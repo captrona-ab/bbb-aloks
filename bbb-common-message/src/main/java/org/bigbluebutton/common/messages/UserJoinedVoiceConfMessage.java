@@ -16,7 +16,6 @@ public class UserJoinedVoiceConfMessage {
 	public static final String CALLER_ID_NUM = "caller_id_num";
 	public static final String MUTED = "muted";
 	public static final String TALKING = "talking";
-	public static final String AVATAR_URL = "avatarURL";
 	
 	public final String voiceConfId;
 	public final String voiceUserId;
@@ -25,10 +24,9 @@ public class UserJoinedVoiceConfMessage {
 	public final String callerIdNum;
 	public final Boolean muted;
 	public final Boolean talking;
-	public final String avatarURL;
 	
 	public UserJoinedVoiceConfMessage(String voiceConfId, String voiceUserId, String userId,
-			String callerIdName, String callerIdNum, Boolean muted, Boolean talking, String avatarURL) {
+			String callerIdName, String callerIdNum, Boolean muted, Boolean talking) {
 		this.voiceConfId = voiceConfId;
 		this.voiceUserId = voiceUserId;
 		this.userId = userId;
@@ -36,7 +34,6 @@ public class UserJoinedVoiceConfMessage {
 		this.callerIdNum = callerIdNum;
 		this.muted = muted;
 		this.talking = talking;
-		this.avatarURL = avatarURL;
 	}
 	
 	public String toJson() {
@@ -48,7 +45,6 @@ public class UserJoinedVoiceConfMessage {
 		payload.put(CALLER_ID_NUM, callerIdNum);
 		payload.put(MUTED, muted);
 		payload.put(TALKING, talking);
-		payload.put(AVATAR_URL, avatarURL);
 		
 		java.util.HashMap<String, Object> header = MessageBuilder.buildHeader(USER_JOINED_VOICE_CONF, VERSION, null);
 
@@ -80,8 +76,7 @@ public class UserJoinedVoiceConfMessage {
 						String callerIdNum = payload.get(CALLER_ID_NUM).getAsString();
 						Boolean muted = payload.get(MUTED).getAsBoolean();
 						Boolean talking = payload.get(TALKING).getAsBoolean();
-						String avatarURL = payload.get(AVATAR_URL).getAsString();
-						return new UserJoinedVoiceConfMessage(voiceConfId, voiceUserId, userId, callerIdName, callerIdNum, muted, talking, avatarURL);
+						return new UserJoinedVoiceConfMessage(voiceConfId, voiceUserId, userId, callerIdName, callerIdNum, muted, talking);					
 					}
 				} 
 			}
